@@ -1,0 +1,94 @@
+<?php if($this->etat == 1) { ?>
+	<div class="alert alert-success alert-dismissible" role="alert">
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  		<strong>Opération effectuée avec succès ! </strong>
+	</div>
+<?php } elseif($this->etat == -1) { ?>
+	<div class="alert alert-danger alert-dismissible" role="alert">
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  		<strong>Opération echouée ! </strong>
+	</div>
+<?php } ?>
+
+<div class="row" style="margin-left : 20px; margin-top:10px">
+	<div class="col-xs-12"> 
+		<div class="row" >
+            <a href="<?php echo $this->url(array("controller"=>"Compterenduinstance","action"=>"index")) ?>" class="btn btn-primary" >Liste des comptes rendus</a>
+		</div>
+    </div>
+
+<form style="margin-top:20px;margin-left:5px" action="<?php echo $this->url(array("controller"=>"Compterenduinstance","action"=>"modifier")) ?>" method="Post" enctype="multipart/form-data">
+<div class="row" style="margin-bottom:0px">
+	<div class="col-xs-12" style="margin-top:10px">
+		<h3 style="margin: 0px; padding-top: 0px;font-weight: bold;text-transform: uppercase;">Modification de compte rendu d'instance</h3>
+		<?php foreach($this->cr as $cr ) : ?>
+			<input type="hidden" name="idCR" value="<?php echo $this->id ?>" />
+		<div class="row" style="border:1px solid #D1DCF5;margin:2px 0 0 0;padding:10px;">
+			<div class="row" style="margin-top:2px">
+            	<div class="col-xs-6" >
+			
+                	<span style="font-weight: bold;">Instance * </span>
+					<select class="form-control" name="idInstance" required="">
+						<option value="<?php echo $cr->idInstance ?> "> <?php echo utf8_encode($cr->libInstance);?> - 
+								<?php if($cr->sigleStructure) echo $cr->sigleStructure; else echo utf8_encode($cr->nomStructure); ?>		
+						</option>
+							<?php foreach($this->listeinst as $inst) : 
+								if($inst->idInstance != $cr->idInstance) :
+							?>
+								<option value="<?php echo $inst->idInstance ?> "> <?php echo utf8_encode($inst->libInstance);?> - 
+								<?php if($inst->sigleStructure) echo $inst->sigleStructure; else echo utf8_encode($inst->nomStructure); ?> </option>
+								<?php endif; endforeach; ?>
+					</select>
+				</div>
+				<div class="col-xs-6" >
+                    <span style="font-weight: bold;">Difficulté</span>
+					<input class="form-control" name="difficulte" type="text"
+					value="<?php echo utf8_encode($cr->difficulte); ?>" />
+				</div>
+			
+        	</div>
+			<div class="row" style="margin-top:2px">
+				<div class="col-xs-12" >
+                    <span style="font-weight: bold;">Objet *</span>
+					<input class="form-control" name="objetCR" type="text" required="" 
+					value="<?php echo utf8_encode($cr->objetCR); ?>"/>
+                </div>
+			</div>
+			<div class="row" style="margin-top:2px">
+
+				<div class="col-xs-6" >
+                    <span style="font-weight: bold;">Décision *</span>
+					<input class="form-control" name="decision" type="text" required=""
+					value="<?php echo utf8_encode($cr->decision); ?>"/>
+                </div>
+				<div class="col-xs-6" >
+                    <span style="font-weight: bold;">Perspective</span>
+					<input class="form-control" name="perspective" type="text"
+					value="<?php echo utf8_encode($cr->perspective); ?>" />
+                </div>
+			</div>
+			<div class="row" style="margin-top:2px">
+				<div class="col-xs-6" >
+                    <span style="font-weight: bold;">Date de début * </span>
+					 <input class="form-control" name="dateDebut" type="date" required="" 
+					 value="<?php echo $cr->dateDebut; ?>"/>
+                </div>
+				<div class="col-xs-6" >
+                    <span style="font-weight: bold;">Date de fin *</span>
+					<input class="form-control" name="dateFin" type="date" required="" 
+					value="<?php echo $cr->dateFin; ?>"/>
+                </div>
+			</div>
+		</div>
+		<?php endforeach; ?>
+	</div>
+    </div>
+<div class=" row" style="margin-top:20px">
+	<div class="col-xs-12" style="background-color: #54B944;height:45px;text-align:center">
+		<input type="submit" value="Enregistrer" class="btn btn-primary" style="border: 1px solid #FFFFFF; background-color: #54B944; border-radius: 0px;margin-top:5px;color:white" />
+		<input type="reset" name="annuler" value="Annuler" class="btn btn-primary" style="border: 1px solid #FFFFFF; background-color:#54B944; border-radius: 0px;margin-top:5px;color:white" />
+	</div>
+</div>
+</form>
+</div>
+

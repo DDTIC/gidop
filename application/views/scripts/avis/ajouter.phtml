@@ -1,0 +1,94 @@
+<?php if($this->etat == 1) { ?>
+	<div class="alert alert-success alert-dismissible" role="alert">
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  		<strong>Opération effectuée avec succès ! </strong>
+	</div>
+<?php } elseif($this->etat == -1) { ?>
+	<div class="alert alert-danger alert-dismissible" role="alert">
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  		<strong>Opération echouée ! </strong>
+	</div>
+<?php } ?>
+<ul class="nav nav-tabs">
+  <li role="presentation" ><a href="<?php echo $this->url(array("controller"=>"Dossierordinaire","action"=>"index")) ?>">Dossiers Ordinaires</a></li>
+  <li role="presentation" ><a href="<?php echo $this->url(array("controller"=>"Instruction","action"=>"index")) ?>">Instructions</a></li>
+  <li role="presentation"><a href="<?php echo $this->url(array("controller"=>"Reaction","action"=>"index")) ?>">Réactions</a></li>
+  <li role="presentation" class="active"><a href="<?php echo $this->url(array("controller"=>"Avis","action"=>"index")) ?>">Avis PM</a></li>
+</ul>
+
+<div class="row" style="margin-left : 20px; margin-top:10px">
+	<div class="col-xs-12"> 
+		<div class="row" >
+            <a href="<?php echo $this->url(array("controller"=>"Avis","action"=>"index")) ?>" class="btn btn-primary" >Liste avis PM</a>
+		</div>
+	</div>
+
+<form style="margin-top:20px;margin-left:5px" action="<?php echo $this->url(array("controller"=>"Avis","action"=>"ajouter")) ?>" method="Post" enctype="multipart/form-data">
+<div class="row" style="margin-bottom:0px">
+	<div class="col-xs-12" style="margin-top:10px">
+		<h5 style="margin: 0px; padding-top: 0px;font-weight: normal;text-transform: uppercase;">Enregistrement des avis</h5>
+		<div class="row" style="border:1px solid #D1DCF5;margin:2px 0 0 0;padding:10px;">
+			<div class="row" style="margin-top:2px">
+            	<div class="col-xs-4" >
+                	<span style="font-weight: bold;">Structure * </span>
+					<select class="form-control" name="idstr" id="str" required="" >
+						<option> </option>
+							<?php foreach($this->listeStr as $str) : ?>
+								<option value="<?php echo $str->idStructure ?> "> <?php if($str->sigleStructure) echo ($str->sigleStructure); else echo ($str->nomStructure); ?> </option>
+							<?php endforeach; ?>
+					</select>
+				</div>
+				<div class="col-xs-8" id="loaddossier">
+                	<span style="font-weight: bold;">Dossier * </span>
+					<select class="form-control" name="iddossier" required="" >
+						<option> </option>
+							
+					</select>
+				</div>
+        	</div>
+			<div class="row" style="margin-top:2px">
+				      <div class="col-xs-8" >
+                    <span style="font-weight: bold;">Avis PM *</span>
+                    <textarea class="form-control" name="avis" required=""  type="text"  > </textarea>
+                </div>
+                <div class="col-xs-4" >
+                    <span style="font-weight: bold;">Date Avis *</span>
+                    <input type="date" class="form-control" name="dateavis" required=""  />
+                </div>
+			</div>
+			<div class="row" style="margin-top:2px">
+				          <div class="col-xs-6" >
+                    <span style="font-weight: bold;">ref. corresp. *</span>
+                    <input type="text" class="form-control" name="refcoresp" required="" />
+                  </div>
+                <div class="col-xs-6" >
+                    <span style="font-weight: bold;">Date corresp. *</span>
+					<input type="date" class="form-control" name="datecoresp" required="" />
+                </div>
+			</div>
+		</div>
+	</div>
+    </div>
+<div class=" row" style="margin-top:20px">
+	<div class="col-xs-12" style="background-color: #54B944;height:45px;text-align:center">
+		<input type="submit" value="Enregistrer" class="btn btn-primary" style="border: 1px solid #FFFFFF; background-color: #54B944; border-radius: 0px;margin-top:5px;color:white" />
+		<input type="reset" name="annuler" value="Annuler" class="btn btn-primary" style="border: 1px solid #FFFFFF; background-color:#54B944; border-radius: 0px;margin-top:5px;color:white" />
+	</div>
+</div>
+</form>
+</div>
+
+<script>
+	$('#str').on('change', function(){
+		event.preventDefault();   
+		  var $idstr = $(this).val();  
+
+  		if(history.pushState) {
+    		history.pushState(null, null, '/gidop/public/' );
+			$('#loaddossier').load('instruction/loaddossier',{idstr : $idstr})
+  		}
+ 
+  		return false;
+
+	})
+</script>

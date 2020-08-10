@@ -1,0 +1,40 @@
+<table class="table table-striped table-condensed" id="itemtabcm">
+	<thead>
+        <tr style="background-color:#F6E864">
+            <th></th>
+            <th hidden="true">Code</th>
+            <th>Matricule</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+			<th>Département</th>
+            <th>Resp.</th>
+        </tr>
+    </thead>
+    <tbody>
+	<?php $i=0; foreach($this->listeAiDossier as $agent) : ?>
+        <tr>
+            <td><a title="Supprimer" href="<?php echo $this->url(array("controller"=>"Dossierordinaire","action"=>"supagent", "id"=>$agent->idAgent )) ?>"><span class="glyphicon glyphicon-remove"> </span></a></td>
+            <td hidden="" id="idagent<?php echo $i ?>"> <?php echo $agent->idAgent ?>  </td>
+            <td><?php echo $agent->matriculeAgent ?> </td>
+            <td><?php echo $agent->nomAgent ?> </td>
+			<td><?php echo $agent->prenomAgent ?> </td>
+			<td><?php echo $agent->sigleDepartement ?> </td>
+			<td><input <?php if($agent->RoleAgent =="Responsable" ){?> checked="checked" <?php } ?> type="radio" name="choix" value="Responsable" id="choix<?php echo $i ?>" > </td>
+        </tr>
+	<?php $i++;endforeach; ?>
+    </tbody>
+</table>
+<script>
+    $('tr').each(function(index){
+	    $('#choix'+index).on('click',function(){
+            event.preventDefault();  
+		    $idagent = $('#idagent'+index).text();
+            //alert($idagent)
+            if(history.pushState) {
+    		    history.pushState(null, null, '/gidop/public/' );
+                $('#sendid').load('dossierordinaire/responsable',{idagent : $idagent, iddossier : '<?php echo $this->id ?>'},function(){});
+  		    }
+		      
+	   });
+    });
+</script>

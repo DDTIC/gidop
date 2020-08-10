@@ -1,0 +1,62 @@
+<div class="row" style="margin-left : 20px; margin-top:10px">
+	<div class="col-sm-12"> 
+		<div class="row" >
+            <a href="<?php echo $this->url(array("controller"=>"Dossiercc","action"=>"ajouter")) ?>" class="btn btn-success">Ajouter</a>
+		</div>
+        <div class="row" style="margin-top:10px">
+        <fieldset>
+            <legend>
+        <h3 style="margin: 0px; padding-top: 0px;font-weight: bold;text-transform: uppercase;">Liste des Dossiers de conseil de cabinet</h3>
+        </legend>
+        <table id="example" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Objet</th>
+                <th>Lettre de convocation</th>
+                <th>Rapport</th>
+                <th>Date</th>
+                <th>Synthèse</th>
+				<th>Orientation</th>
+				<th>Echéance</th>
+                <th>Observation</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($this->listeDossier as $dossier) : ?>
+                <tr>
+                    <td><?php echo utf8_encode($dossier->libType); ?></td>
+                    <td><?php echo $dossier->objetDossierCC; ?></td>
+                    <td><?php echo $dossier->refLettreConvocation; ?></td>
+                    <td><?php echo $dossier->refRapport; ?></td>
+                    <td><?php echo $dossier->dateCC; ?></td>
+                    <td><?php echo $dossier->syntheseDossierCC; ?></td>
+					<td><?php echo $dossier->orientationCC; ?></td>
+					<td><?php echo $dossier->echeanceMiseOeuvre; ?></td>
+                    <td><?php echo $dossier->observationCC; ?></td>
+                    <td><a href="<?php echo $this->url(array('controller'=>'Dossiercc','action'=>'modifier','id'=>$dossier->idDossierCC)) ?>"><span class="glyphicon glyphicon-edit"  alt="modifier" title="Modifier"> </span></a>
+                    <a href="<?php echo $this->url(array('controller'=>'Dossiercc','action'=>'supprimer','id'=>$dossier->idDossierCC)) ?>"><span class="glyphicon glyphicon-remove" alt="supprimer" title="supprimer"> </span></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    </fieldset>
+		</div>
+	</div>
+</div>
+<script>
+	$(document).ready(function() {
+    $('#example').DataTable( {
+        "language": {
+            "lengthMenu": "Affichage _MENU_   par page",
+            "zeroRecords": "Nothing found - Aucune donnée trouvée",
+            "info": "Page _PAGE_ sur _PAGES_",
+            "infoEmpty": "Aucune donnée à afficher",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "search": "Recherche ",
+        }
+    } );
+} );
+</script>

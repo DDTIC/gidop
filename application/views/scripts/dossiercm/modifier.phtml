@@ -1,0 +1,133 @@
+<?php if($this->etat == 1) { ?>
+	<div class="alert alert-success alert-dismissible" role="alert">
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  		<strong>Opération effectuée avec succès ! </strong>
+	</div>
+<?php } elseif($this->etat == -1) { ?>
+	<div class="alert alert-danger alert-dismissible" role="alert">
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  		<strong>Opération echouée ! </strong>
+	</div>
+<?php } //echo $this->essai ?>
+
+<div class="row" style="margin-left : 20px; margin-top:10px">
+	<div class="col-xs-12"> 
+		<div class="row" >
+            <a href="<?php echo $this->url(array("controller"=>"Dossiercm","action"=>"index")) ?>" class="btn btn-primary" >Liste dossiers</a>
+		</div>
+</div>
+
+<form style="margin-top:20px;margin-left:5px" action="<?php echo $this->url(array("controller"=>"Dossiercm","action"=>"modifier")) ?>" method="Post" enctype="multipart/form-data">
+
+<div class="row" style="margin-bottom:0px">
+	<div class="col-xs-12" style="margin-top:10px">
+		<h3 style="margin: 0px; padding-top: 0px;font-weight: bold;text-transform: uppercase;">Mise à jour des dossiers de conseil des ministres</h3>
+		<?php foreach($this->dossier as $dossier ) : ?>
+			<input type="hidden" name="idDossierCM" value="<?php echo $this->id ?>" />
+			<div class="row" style="border:1px solid #D1DCF5;margin:2px 0 0 0;padding:10px;">
+			<div class="row" style="margin-top:2px">
+            	<div class="col-xs-6" >
+                	<span style="font-weight: bold;">Structure * </span>
+					<select class="form-control" name="idStructure" required="">
+					<option value="<?php echo $dossier->idStructure ?> ">
+								<?php if($dossier->sigleStructure) echo $dossier->sigleStructure; else echo utf8_encode($dossier->nomStructure); ?>		
+						</option>
+							<?php foreach($this->listeStr as $str) : 
+								if($str->idStructure != $dossier->idStructure) :
+							?>
+								<option value="<?php echo $str->idStructure ?> "> 
+								<?php if($str->sigleStructure) echo $str->sigleStructure; else echo utf8_encode($str->nomStructure); ?> </option>
+								<?php endif; endforeach; ?>
+					</select>
+				</div>
+            	<div class="col-xs-6" >
+                	<span style="font-weight: bold;">Agent traitant * </span>
+					<select class="form-control" name="idAgent" required="">
+					<option value="<?php echo $dossier->idAgent ?> ">
+					<?php echo (utf8_encode($dossier->nomAgent)." ".utf8_encode($dossier->prenomAgent) );?>	
+						</option>
+							<?php foreach($this->listeag as $agent) : 
+								if($agent->idAgent != $dossier->idAgent) :
+								?>
+								<option value="<?php echo $agent->idAgent; ?> "> <?php echo (utf8_encode($agent->nomAgent)." ".utf8_encode($agent->prenomAgent) );?> </option>
+								<?php endif; endforeach; ?>
+					</select>
+				</div>
+        </div>
+			<div class="row" style="margin-top:2px">
+            	<div class="col-xs-4" >
+                	<span style="font-weight: bold;">Type * </span>
+					<select class="form-control" name="idType" required="">
+					<option value="<?php echo $dossier->idType ?>"><?php echo utf8_encode($dossier->libType); ?> </option>
+					<?php  foreach($this->listetdc as $tdc) : 
+									if($tdc->idType != $dossier->idType) :
+							?>
+									<option value="<?php echo $tdc->idType ?> "> <?php echo utf8_encode($tdc->libType); ?> </option>
+							<?php endif; endforeach; ?>
+					</select>
+				</div>
+				<div class="col-xs-4" >
+                    <span style="font-weight: bold;">Numero SGGCM *</span>
+					<input class="form-control" name="numeroSGGCM" type="text" required="" 
+					value="<?php echo $this->escape($dossier->numeroSGGCM); ?>" />
+				</div>
+				<div class="col-xs-4" >
+                    <span style="font-weight: bold;">Date Conseil des ministres * </span>
+					 <input class="form-control" name="dateCM" type="date" required="" 
+					 value="<?php echo $this->escape($dossier->dateCM); ?>"/>
+                </div>
+        	</div>
+			<div class="row" style="margin-top:2px">
+				<div class="col-xs-12" >
+                    <span style="font-weight: bold;">Objet *</span>
+					<input class="form-control" name="objetDossierCM" type="text" required="" 
+					value="<?php echo utf8_encode($dossier->objetDossierCM); ?>" />
+                </div>
+			</div>
+			<div class="row" style="margin-top:2px">
+
+				<div class="col-xs-6" >
+                    <span style="font-weight: bold;">Réference du dossier CM *</span>
+					<input class="form-control" name="refDossierCM" type="text" required=""
+					value="<?php echo $this->escape($dossier->refDossierCM); ?>"/>
+                </div>
+				<div class="col-xs-6" >
+                    <span style="font-weight: bold;">Réference du texte adopté *</span>
+					<input class="form-control" name="refTexteAdopte" type="text" required="" 
+					value="<?php echo $this->escape($dossier->refTexteAdopte); ?>"/>
+                </div>
+			</div>
+			<div class="row" style="margin-top:2px">
+				<div class="col-xs-4" >
+                    <span style="font-weight: bold;">Date de signature * </span>
+					 <input class="form-control" name="dateSignature" type="date" required=""
+					 value="<?php echo $this->escape($dossier->dateSignature); ?>" />
+                </div>
+				<div class="col-xs-8" >
+                    <span style="font-weight: bold;">Décision *</span>
+					<input class="form-control" name="decisionCM" type="text" required="" 
+					value="<?php echo $this->escape($dossier->decisionCM); ?>"/>
+                </div>
+			</div>
+			<div class="row" style="margin-top:2px">
+				<div class="col-xs-6" >
+                    <span style="font-weight: bold;">Synthèse *</span>
+					<textarea class="form-control" name="syntheseDossierCM" required="" rows=5><?php echo utf8_encode($dossier->syntheseDossierCM); ?></textarea>
+                </div>
+                <div class="col-xs-6" >
+                    <span style="font-weight: bold;">Observation </span>
+					<textarea class="form-control" name="observationCM" rows=5><?php echo utf8_encode($dossier->observationCM); ?></textarea>
+                </div>
+			</div>
+		</div>
+		<?php endforeach; ?>
+	</div>
+    </div>
+<div class=" row" style="margin-top:20px">
+	<div class="col-xs-12" style="background-color: #54B944;height:45px;text-align:center">
+		<input type="submit" value="Modifier" class="btn btn-primary" style="border: 1px solid #FFFFFF; background-color: #54B944; border-radius: 0px;margin-top:5px;color:white" />
+		<input type="reset" name="annuler" value="Annuler" class="btn btn-primary" style="border: 1px solid #FFFFFF; background-color:#54B944; border-radius: 0px;margin-top:5px;color:white" />
+	</div>
+</div>
+</form>
+

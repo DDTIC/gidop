@@ -1,0 +1,53 @@
+<div class="row" style="margin-left : 20px; margin-top:10px">
+	<div class="col-sm-12"> 
+		<div class="row" >
+            <a href="<?php echo $this->url(array("controller"=>"Pta","action"=>"ajouter")) ?>" class="btn btn-success">Ajouter</a>
+		</div>
+        <div class="row" style="margin-top:10px">
+        <fieldset>
+            <legend>
+        <h3 style="margin: 0px; padding-top: 0px;font-weight: bold;text-transform: uppercase;">Liste des Plans de travail annuels (PTA)</h3>
+        </legend>
+        <table id="example" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+			<td>Année</td>
+                <th>PTA</th>
+                <th>Date de transmission</th>
+                <th>Reférences de correspondance</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($this->listeDossier as $dossier) : ?>
+                <tr>
+				<td><?php echo $dossier->annee; ?></td>
+                    <td><?php echo $dossier->libPTA; ?></td>
+                    <td><?php echo $dossier->dateTransmission; ?></td>
+                    <td><?php echo $dossier->refCorrespondance; ?></td>
+
+                    <td><a href="<?php echo $this->url(array('controller'=>'Pta','action'=>'modifier','id'=>$dossier->idPTA)) ?>"><span class="glyphicon glyphicon-edit"  alt="modifier" title="Modifier"> </span></a>
+                    <a href="<?php echo $this->url(array('controller'=>'Pta','action'=>'supprimer','id'=>$dossier->idPTA)) ?>"><span class="glyphicon glyphicon-remove" alt="supprimer" title="supprimer"> </span></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    </fieldset>
+		</div>
+	</div>
+</div>
+<script>
+	$(document).ready(function() {
+    $('#example').DataTable( {
+        "language": {
+            "lengthMenu": "Affichage _MENU_   par page",
+            "zeroRecords": "Nothing found - Aucune donnée trouvée",
+            "info": "Page _PAGE_ sur _PAGES_",
+            "infoEmpty": "Aucune donnée à afficher",
+            "infoFiltered": "(filtered from _MAX_ total records)",
+            "search": "Recherche ",
+        }
+    } );
+} );
+</script>

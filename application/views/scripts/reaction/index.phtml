@@ -1,0 +1,63 @@
+<ul class="nav nav-tabs">
+  <li role="presentation" ><a href="<?php echo $this->url(array("controller"=>"Dossierordinaire","action"=>"index")) ?>">Dossiers Ordinaires</a></li>
+  <li role="presentation" ><a href="<?php echo $this->url(array("controller"=>"Instruction","action"=>"index")) ?>">Instructions</a></li>
+  <li role="presentation" class="active"><a href="<?php echo $this->url(array("controller"=>"Reaction","action"=>"index")) ?>">Réactions</a></li>
+  <li role="presentation" ><a href="<?php echo $this->url(array("controller"=>"Avis","action"=>"index")) ?>">Avis PM</a></li>
+</ul>
+
+<div class="row" style="margin-left : 20px; margin-top:10px">
+	<div class="col-xs-12"> 
+		<div class="row" >
+            <a href="<?php echo $this->url(array("controller"=>"Reaction","action"=>"ajouter")) ?>" class="btn btn-success" >Ajouter</a>
+		</div>
+		<div class="row" style="margin-top:10px">
+		<table id="example" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>Structure</th>
+                <th>Objet du dossier</th>
+                <th>Instruction</th>
+                <th>Suite donnée</th>
+                <th>Observation</th>
+                <th>Ref. Réaction</th>
+                <th>Date corresp. réaction</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($this->listeReact as $reaction) : ?>
+                <tr>
+                    <td><?php if($reaction->sigleStructure) echo ($reaction->sigleStructure) ; else echo ($reaction->nomStructure); ?></td>
+                    <td><?php echo ($reaction->objetDossierO); ?></td>
+                    <td><?php echo ($reaction->instruction); ?></td>
+                    <td><?php echo $reaction->suiteDonnee; ?></td>
+                    <td><?php echo $reaction->observation; ?></td>
+                    <td><?php echo ($reaction->refCorrepReaction); ?></td>
+                    <td><?php echo $reaction->dateCorrespReaction; ?></td>
+                    <td>
+                        <a href="<?php echo $this->url(array("controller"=>"Reaction","action"=>"modifier", "id"=>$reaction->idReaction, "idstr"=>$reaction->idStructure, "iddossier"=>$reaction->idDossierO )) ?>"><span class="glyphicon glyphicon-edit"> </span></a>
+                        <a href="<?php echo $this->url(array("controller"=>"Reaction","action"=>"supprimer", "id"=>$reaction->idReaction )) ?>"><span class="glyphicon glyphicon-remove"> </span></a>
+                    </td>
+
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function() {
+    $('#example').DataTable( {
+        "language": {
+            "lengthMenu": "Affichage _MENU_   par page",
+            "zeroRecords": "Aucune donnée trouvée",
+            "info": "Page _PAGE_ sur _PAGES_",
+            "infoEmpty": "Aucune donnée à afficher",
+            "infoFiltered": "(filteré à partir de _MAX_ enregistrements)",
+            "search": "Recherche ",
+        }
+    } );
+} );
+</script>

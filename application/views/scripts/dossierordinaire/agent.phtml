@@ -1,0 +1,119 @@
+<ul class="nav nav-tabs">
+  <li role="presentation" class="active"><a href="<?php echo $this->url(array("controller"=>"Dossierordinaire","action"=>"index")) ?>">Dossiers Ordinaires</a></li>
+  <li role="presentation"><a href="<?php echo $this->url(array("controller"=>"Instruction","action"=>"index")) ?>">Instructions</a></li>
+  <li role="presentation"><a href="<?php echo $this->url(array("controller"=>"Reaction","action"=>"index")) ?>">Réactions</a></li>
+  <li role="presentation" ><a href="<?php echo $this->url(array("controller"=>"Avis","action"=>"index")) ?>">Avis PM</a></li>
+</ul>
+
+<div class="row" style="margin-left : 20px; margin-top:10px">
+	<div class="col-xs-12"> 
+		<div class="row" >
+            <a href="<?php echo $this->url(array("controller"=>"Dossierordinaire","action"=>"index")) ?>" class="btn btn-primary" >Liste dossiers</a>
+		</div>
+	</div>
+	
+
+<form>
+    <div class="row" style="margin-bottom:0px">
+        <div class="col-xs-12" style="margin-top:10px">
+            <h5 style="margin: 0px; padding-top: 0px;font-weight: normal;text-transform: uppercase;">Affecter agent(s) au dossier</h5>
+            <div class="row" style="border:1px solid #D1DCF5;margin:2px 0 0 0;padding:10px">
+                <div class="row" >
+                    <div class="col-xs-3">
+                        <span style="font-weight: bold;">Structure * </span>
+                        <select class="form-control">
+                            <?php foreach($this->structure as $str) : ?>
+                                <option value="<?php echo $str->idStructure ?>"><?php if($str->sigleStructure) echo ($str->sigleStructure) ; else echo ($str->nomStructure); ?> </option>
+                            <?php endforeach;?>
+                        </select>
+                    </div>
+                    <div class="col-xs-9" >
+                        <span style="font-weight: bold;">Dossier * </span>
+                        <select class="form-control" id="iddossier">
+                            <?php  foreach($this->dossier as $do) : $i++; ?>
+                                <option value="<?php echo $do->idDossierO ?>"><?php echo $do->objetDossierO ?> </option>
+                            <?php endforeach;?>
+                        </select>
+                    </div>
+				</div>
+				<div class="row" >
+                    <div class="col-xs-6" >
+                        <span style="font-weight: bold;">Agent </span>
+                        <select class="form-control" id="idagent">
+                            <option value="" > </option>
+                            <?php foreach($this->listeAgent as $agent) : ?>
+                                <option value="<?php echo $agent->idAgent ?>"><?php echo utf8_encode($agent->nomAgent.'  '.$agent->prenomAgent.'  '.$agent->sigleDepartement) ?> </option>
+                            <?php endforeach;?>
+                        </select>
+                    </div>
+					<div class="col-xs-6" id="loadtabagent" style="margin-top:20px">
+					<table class="table table-striped table-condensed" id="itemtabcm">
+	<thead>
+        <tr style="background-color:#F6E864">
+            <th></th>
+            <th hidden="true">Code</th>
+            <th>Matricule</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+			<th>Département</th>
+			<th>Resp.</th>
+        </tr>
+    </thead>
+    <tbody>
+	<?php $i=0; foreach($this->listeAiDossier as $agent) : ?>
+        <tr>
+            <td><a title="Supprimer" href="<?php echo $this->url(array("controller"=>"Dossierordinaire","action"=>"supagent", "id"=>$agent->idAgent )) ?>"><span class="glyphicon glyphicon-remove"> </span></a></td>
+            <td hidden="" id="idagent<?php echo $i ?>"> <?php echo $agent->idAgent ?>  </td>
+            <td><?php echo $agent->matriculeAgent ?> </td>
+            <td><?php echo $agent->nomAgent ?> </td>
+			<td><?php echo $agent->prenomAgent ?> </td>
+			<td><?php echo $agent->sigleDepartement ?> </td>
+			<td><input <?php if($agent->RoleAgent =="Responsable" ){?> checked="checked" <?php } ?> type="radio" name="choix" value="Responsable" id="choix<?php echo $i ?>" > </td>
+        </tr>
+	<?php $i++;endforeach; ?>
+    </tbody>
+</table>
+                   </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class=" row" style="margin-top:20px">
+        <div class="col-xs-12" style="background-color: #54B944;height:45px;text-align:center">
+            <input type="button" name="enregistrer" value="Enregistrer" id="vacm" class="btn btn-primary" style="border: 1px solid #FFFFFF; background-color: #54B944; border-radius: 0px;margin-top:5px;color:white" />
+            <input type="reset" name="annuler" value="Annuler" id="fdossiera" class="btn btn-primary" style="border: 1px solid #FFFFFF; background-color: #54B944; border-radius: 0px;margin-top:5px;color:white" />
+        </div>
+    </div>
+</form>
+<div id="sendid"> </div>
+<script>
+	$('#idagent').on('change', function(){
+		
+		event.preventDefault();   
+		var $idagent = $(this).val(); 
+		var $iddossier = $('#iddossier').val();
+
+  		if(history.pushState) {
+    		history.pushState(null, null, '/gidop/public/' );
+			$('#loadtabagent').load('dossierordinaire/loadtabagent',{idagent : $idagent, iddossier : $iddossier },function(data){
+				
+			} )
+  		}
+ 
+  		return false;
+	})
+
+    $('tr').each(function(index){
+	    $('#choix'+index).on('click',function(){
+            event.preventDefault();  
+		    $idagent = $('#idagent'+index).text();
+            //alert($idagent)
+            if(history.pushState) {
+    		    history.pushState(null, null, '/gidop/public/' );
+                $('#sendid').load('dossierordinaire/responsable',{idagent : $idagent, iddossier : '<?php echo $this->id ?>'},function(){});
+  		    }
+		      
+	   });
+    });
+
+</script>

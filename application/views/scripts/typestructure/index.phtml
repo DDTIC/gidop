@@ -1,0 +1,167 @@
+<div class="row">
+	<div class="col-lg-12">
+		<div class="row">
+			<div class="col-lg-4">
+			</div>
+			<div class="col-lg-8">
+				<div style="background: #54B944;margin-top:2px;height:20px;color:white;padding-left:10px">Paramètre type structure</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-12">
+		<div class="row">
+			<div class="col-lg-4"></div>
+				<form class="form-horizontal col-lg-8 " style="margin-top: 20px;" >
+    				<h5 style="margin: 0px; padding-top: 0px;font-weight: normal;text-transform: uppercase;">Informations Type structure</h5>
+    				<div class="row " style="border:1px solid #D1DCF5;margin:2px 0 0 0;padding:10px;">
+    				<div class="row">
+            			<div class="col-xs-12" >
+                			<span style="font-weight: bold;">Libellé type structure * </span>
+							<input type="text" id="classea"  style="" class="form-control"/>
+            			</div>
+					</div>
+    				<div class="row" style="margin-top: 10px;">
+						<div class="col-xs-12" style="margin-bottom: 5px;">
+							<a href="#"  class="btn btn-primary" id="vaclasse" style="border: 1px solid #FFFFFF; background-color: #54B944; border-radius: 0px;">Enregistrer</a>
+                			<input type="reset" class="btn btn-primary" value="Annuler" style="border: 1px solid #FFFFFF; background-color: #54B944; border-radius: 0px;"/>
+						</div>
+					</div>
+    			</div>
+			</form>
+		</div>	
+	</div>
+	<div class="col-lg-12">
+		<div class="row">
+			<div class="col-lg-4"></div>
+				<div class="col-lg-8 " style="margin-top: 20px;" >
+				<table class="table table-striped table-condensed" id="itemclasse">
+				<thead>
+					<tr style="background-color:#54B944">
+						<th></th>
+                        <th></th>
+						<th>Libellé</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php $i=0; foreach($this->listeclasse as $classe) : ?>
+						<tr style="background-color:#E0F4E6">
+							<td title="Modifier" id="immodifclasse<?php echo $i;?>"><img style="cursor:pointer"  src="<?php echo $this->baseUrl().'/images/edit_ico.png'?>"/></td>
+							<td title="Supprimer" id="imsupclasse<?php echo $i;?>"><img style="cursor:pointer"  src="<?php echo $this->baseUrl().'/images/delete_ico.png'?>"/></td>
+                            <td hidden="" style="text-align:center" id="idclasse<?php echo $i;?>"><?php echo $classe->id_classe;?></td>
+							<td ><?php echo $classe->lib_classe;?></td>
+						</tr>
+					<?php $i++; endforeach;?>
+				</tbody>
+			</table>
+				</div>
+			</div>	
+		</div>
+	</div>	
+
+
+
+<div class="row "> 
+
+</div>
+
+<!--<div class="row " style="margin-top:20px;">
+    <div class="col-xs-7">
+    <h5 style="margin: 0px; padding-top: 0px;font-weight: normal;text-transform: uppercase;">Liste des classes</h5>
+    <div class="col-xs-12" style="border:1px solid #D1DCF5;margin:2px 0 0 0;padding:10px;">
+        <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="col-xs-7">
+            <div class="input-group">
+                <input type="text" placeholder="Rechercher classe" value="<?php echo $this->recherche?>" style="width: 100%;" id="rechercheclasse" class="form-control"/>
+                <span class="input-group-addon" id="vrechercheclasse" title="rechercher" style="cursor: pointer"><span class="glyphicon glyphicon-search"></span></span>
+            </div>
+        </div>
+
+    </div>
+		<table class="table table-striped table-condensed" id="itemclasse">
+				<thead>
+					<tr style="background-color:#54B944">
+						<th></th>
+                        <th></th>
+						<th>Libellé</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php $i=0; foreach($this->listeclasse as $classe) : ?>
+						<tr style="background-color:#E0F4E6">
+							<td title="Modifier" id="immodifclasse<?php echo $i;?>"><img style="cursor:pointer"  src="<?php echo $this->baseUrl().'/images/edit_ico.png'?>"/></td>
+							<td title="Supprimer" id="imsupclasse<?php echo $i;?>"><img style="cursor:pointer"  src="<?php echo $this->baseUrl().'/images/delete_ico.png'?>"/></td>
+                            <td hidden="" style="text-align:center" id="idclasse<?php echo $i;?>"><?php echo $classe->id_classe;?></td>
+							<td ><?php echo $classe->lib_classe;?></td>
+						</tr>
+					<?php $i++; endforeach;?>
+				</tbody>
+			</table>
+			
+            </div>
+            </div>-->
+</div>
+<div class="modal" id="confirmationclasse">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="background-color : whitesmoke">
+            <div class="modal-body">
+				<span class="glyphicon glyphicon-exclamation-sign" style="color: #f0ad4e"><label > Supprimer cet élement ? </label></span>
+            </div>
+            <div class="modal-footer">
+                <a href="#"  class="btn btn-success" id="vconfirmationclasse" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> OUI</a>
+				<a href="#"  class="btn btn-danger" id="fconfirmationclasse" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span> NON</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div id="paginationclasse" class=" col-xs-7" style="margin-top:20px"></div>-->
+<div id="envoi_classe_index"></div>
+
+<script>
+    var $corps = $('#corps'); 
+    var $envoi_classe_index = $('#envoi_classe_index');
+    var items = $("#itemclasse tbody tr");
+    var numItems = '<?php echo $this->num ?>';
+    var perPage = 5;
+    items.slice(perPage).hide();
+    pagination('#paginationclasse',numItems,perPage);
+
+    $('#vaclasse').on('click',function(){
+        var $classe = $('#classea').val();
+        if($classe == ""){
+        	 notification("vide");
+         }
+        else {
+            $envoi_classe_index.load("classe/ajouter",{classe : $classe},function(data){
+
+                notification($etat);
+                $corps.load("classe/index");
+            });
+        }  
+    }); 
+    
+    $('tr').each(function(index){
+       $('#imsupclasse'+index).on('click',function(){
+            $('#confirmationclasse').modal();
+            $('#vconfirmationclasse').on('click',function(){
+                var $idclasse = $('#idclasse'+index).text();
+                $envoi_classe_index.load("classe/supprimer",{idclasse : $idclasse},function(){
+                    notification($etat);
+                    $corps.load("classe/index");
+                }); 
+            });
+       }); 
+    });
+    $('tr').each(function(index){
+       $('#immodifclasse'+index).on('click',function(){
+            var $idclasse = $('#idclasse'+index).text();
+            $envoi_classe_index.load("classe/formodifier",{idclasse : $idclasse},function(data){
+
+                $('#modifierclasse').modal();
+            });
+       }); 
+    });
+    $('#vrechercheclasse').on('click',function(){
+        var $recherche = $('#rechercheclasse').val();
+        $corps.load('classe/index',{recherche:$recherche})
+    })
+</script>

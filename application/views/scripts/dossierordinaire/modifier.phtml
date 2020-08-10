@@ -1,0 +1,94 @@
+<?php if($this->etat == 1) { ?>
+	<div class="alert alert-success alert-dismissible" role="alert">
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  		<strong>Opération effectuée avec succès ! </strong>
+	</div>
+<?php } elseif($this->etat == -1) { ?>
+	<div class="alert alert-danger alert-dismissible" role="alert">
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  		<strong>Opération echouée ! </strong>
+	</div>
+<?php } echo $this->essai ?>
+<ul class="nav nav-tabs">
+  <li role="presentation" class="active"><a href="<?php echo $this->url(array("controller"=>"Dossierordinaire","action"=>"index")) ?>">Dossiers Ordinaires</a></li>
+  <li role="presentation"><a href="<?php echo $this->url(array("controller"=>"Instruction","action"=>"index")) ?>">Instructions</a></li>
+  <li role="presentation"><a href="<?php echo $this->url(array("controller"=>"Reaction","action"=>"index")) ?>">Réactions</a></li>
+  <li role="presentation" ><a href="<?php echo $this->url(array("controller"=>"Avis","action"=>"index")) ?>">Avis PM</a></li>
+</ul>
+
+<div class="row" style="margin-left : 20px; margin-top:10px">
+	<div class="col-xs-12"> 
+		<div class="row" >
+            <a href="<?php echo $this->url(array("controller"=>"Dossierordinaire","action"=>"index")) ?>" class="btn btn-primary" >Liste dossiers</a>
+		</div>
+</div>
+
+<form style="margin-top:20px;margin-left:5px" action="<?php echo $this->url(array("controller"=>"Dossierordinaire","action"=>"modifier")) ?>" method="Post" enctype="multipart/form-data">
+<div class="row" style="margin-bottom:0px">
+	<div class="col-xs-12" style="margin-top:10px">
+		<h5 style="margin: 0px; padding-top: 0px;font-weight: normal;text-transform: uppercase;">Mise à jour Dossiers Ordinaires</h5>
+		<?php foreach($this->dossier as $dossier ) : ?>
+		<div class="row" style="border:1px solid #D1DCF5;margin:2px 0 0 0;padding:10px;">
+			<div class="row" style="margin-top:2px">
+            	<div class="col-xs-6" >
+                	<span style="font-weight: bold;">Structure * </span>
+					<select class="form-control" name="idstr" required="" >
+						<option value="<?php echo $dossier->idStructure ?>" ><?php if($dossier->sigleStructure) echo utf8_encode($dossier->sigleStructure); else echo utf8_encode($dossier->nomStructure); ?></option>
+							<?php  foreach($this->listeStr as $str) : 
+									if($str->idStructure != $dossier->idStructure) :
+							?>
+									<option value="<?php echo $str->idStructure ?> "> <?php if($str->sigleStructure) echo utf8_encode($str->sigleStructure); else echo ($str->nomStructure); ?> </option>
+							<?php endif; endforeach; ?>
+					</select>
+				</div>
+				<div class="col-xs-6" >
+                	<span style="font-weight: bold;">Status * </span>
+					<select class="form-control" name="idst" required="" >
+						<option value="<?php echo $dossier->idStatut ?>"><?php echo utf8_encode($dossier->libStatut); ?> </option>
+							<?php foreach($this->listeSt as $st) : 
+								if($st->idStatut != $dossier->idStatut) :
+							?>
+								<option value="<?php echo $st->idStatut ?>"> <?php echo utf8_encode($st->libStatut) ?> </option>
+							<?php endif; endforeach; ?>
+					</select>
+				</div>
+        	</div>
+			<div class="row" style="margin-top:2px">
+				<div class="col-xs-12" >
+                    <span style="font-weight: bold;">Objet *</span>
+                    <input class="form-control" name="objet" type="text" required="" value="<?php echo utf8_encode($dossier->objetDossierO); ?>"  />
+                </div>
+			</div>
+			<div class="row" style="margin-top:2px">
+				<div class="col-xs-6" >
+                    <span style="font-weight: bold;">Réference correspondance *</span>
+                    <input class="form-control" name="ref" type="text" required="" value="<?php echo utf8_encode($dossier->refCorrespondance); ?>" />
+                </div>
+                <div class="col-xs-6" >
+                    <span style="font-weight: bold;">Date correspondance * </span>
+                     <input class="form-control" name="date" type="date" required="" value="<?php echo $this->escape($dossier->dateCorrespondance) ; ?>" />
+                </div>
+			</div>
+			<div class="row" style="margin-top:2px">
+				<div class="col-xs-6" >
+                    <span style="font-weight: bold;">Synthèse *</span>
+                    <textarea class="form-control" name="synthese" required="" ><?php echo utf8_encode($dossier->syntheseDossierO); ?></textarea>
+                </div>
+                <div class="col-xs-6" >
+                    <span style="font-weight: bold;">Observation </span>
+					<textarea class="form-control" name="observation"><?php echo utf8_encode($dossier->observationDossierO); ?></textarea>
+					<input type="hidden" name="id" value="<?php echo $this->id ?>" />
+                </div>
+			</div>
+		</div>
+		<?php endforeach; ?>
+	</div>
+    </div>
+<div class=" row" style="margin-top:20px">
+	<div class="col-xs-12" style="background-color: #54B944;height:45px;text-align:center">
+		<input type="submit" value="Modifier" class="btn btn-primary" style="border: 1px solid #FFFFFF; background-color: #54B944; border-radius: 0px;margin-top:5px;color:white" />
+		<input type="reset" name="annuler" value="Annuler" class="btn btn-primary" style="border: 1px solid #FFFFFF; background-color:#54B944; border-radius: 0px;margin-top:5px;color:white" />
+	</div>
+</div>
+</form>
+

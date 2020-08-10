@@ -1,0 +1,23 @@
+<form method="Post" action="<?php echo $this->url(array('action'=>'supprimer')); ?>">
+<div class="modal" id="confirmationReact">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="background-color : whitesmoke">
+                <div class="modal-body">
+				    <span class="glyphicon glyphicon-exclamation-sign" style="color: #f0ad4e"><label > Supprimer cet élement ? </label></span>
+                    <input type="hidden" name="id" value="<?php echo $this->id; ?>"/>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-success " value="OUI">
+				    <a href="<?php echo $this->url(array("controller"=>"Reaction","action"=>"index" )) ?>"  class="btn btn-danger" > NON</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+
+<script>
+	$(document).ready(function(){
+		$('#confirmationReact').modal()
+	});
+</script>

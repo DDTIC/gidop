@@ -1,0 +1,63 @@
+<?php
+$this->headMeta()->appendHttpEquiv('Content-Type', 'text/html;charset=utf-8');
+$this->headTitle()->setSeparator(' - ');
+$this->headTitle('GIDoP');
+
+echo $this->doctype(); 
+echo $this->headLink()->prependStylesheet($this->baseUrl().'/js/bootstrap/css/bootstrap.min.css');
+?>
+            
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <meta name="viewport" content="width=device-width, initialscale=
+1.0"/>
+<title>GIDoP</title>
+    <?php echo $this->headMeta(); ?>
+
+    <?php echo $this->headMeta(); ?>
+    <?php echo $this->headTitle(); ?>
+        <?php echo $this->headLink()->prependStylesheet($this->baseUrl().'../css/bootstrap.min.css'); ?>
+</head>
+<body style=" background-color:#1e8449;">
+
+<div class="row">
+<div class="col-md-3"></div>
+    <div class="panel panel-success col-md-5" style="position: relative; top: 200px;">
+        <div class="panel-heading" style="text-align: center;font-weight: bold;"><h3>Connexion</h3></div>
+        <div class="panel-body ">
+        <div class="row">
+            <img class="col-md-4" src="<?php echo $this->baseUrl().'../images/logo_menu.png'?>" />
+            
+            <form class="form-horizontal col-md-8" action="<?php echo $this->url(array("controller"=>"Connexion","action"=>"index"));?>" 
+            method="post" enctype="application/x-www-form-urlencoded" >
+                            <!-- Text input-->
+                            <div class="form-group">
+                              <label class="col-md-4" for="login">Identifiant :</label>  
+                              <div class="col-md-7 ">
+                              <input id="login" name="login" type="text" class="form-control input-md" required=""/>
+                              </div>
+                            </div>
+                            
+                            <!-- Text input-->
+                            <div class="form-group">
+                              <label class="col-md-4" for="password">Mot de passe :</label>  
+                              <div class="col-md-7 ">
+                              <input id="mdp" name="password" type="password" class="form-control input-md" required=""/>
+                              </div>
+                            </div>
+                            <button type="submit" name="connexion" class="btn btn-success"><span class=""></span>Se connecter</button>
+            </form>
+            </div>
+            
+        </div>
+            <div class="panel-footer" style="text-align: center;"><p class="copyright">
+                    &copy; <script>document.write(new Date().getFullYear())</script> GIDoP
+                </p></div>
+        </div>
+
+</div>
+
+</body>
+</html>

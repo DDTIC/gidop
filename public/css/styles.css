@@ -1,0 +1,47 @@
+#bloc_page
+{
+	
+	margin-top: 0px;
+}
+header
+{
+
+	border: 1px solid black;
+    /*position: fixed;*/
+    /*background-color: #11A94D;*/
+}
+#logo
+{
+	/*background-color: red;*/
+        
+
+}
+#im_logo
+{
+    margin-top: 4%; 
+    margin-left: 20%;
+}
+#definition
+{
+        margin-top: 0.5%;
+        border-left: 2px solid black;
+}
+#date
+{
+        margin-top: 5%;
+}
+#barnere
+{
+    text-align:right; 
+    margin-bottom:0px;  
+
+}
+
+#steps { list-style:none; width:100%; overflow:hidden; margin:0px; padding:0px;}
+        #steps li {font-size:12px; float:left; padding:10px; color:#b0b1b3;}
+        #steps li span {font-size:11px; display:block;}
+        #steps li.current { color:green;}
+        #makeWizard { background-color:#b0232a; color:#fff; padding:5px 10px; text-decoration:none; font-size:18px;}
+        #makeWizard:hover { background-color:#000;}
+        #SaveAccount {margin-left: 200px;margin-top: 20px;}
+

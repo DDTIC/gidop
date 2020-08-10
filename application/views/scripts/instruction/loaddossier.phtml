@@ -1,0 +1,7 @@
+<span style="font-weight: bold;">Dossier * </span>
+	<select class="form-control" name="iddossier" id="iddossier" required="" >
+		<option></option>
+		<?php foreach($this->listeDostr as $dossier) : ?>
+			<option value="<?php echo $dossier->idDossierO ?>"> <?php echo $dossier->objetDossierO ?> </option>
+		<?php endforeach; ?>
+	</select>

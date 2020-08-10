@@ -1,0 +1,67 @@
+<ul class="nav nav-tabs">
+  <li role="presentation" ><a href="<?php echo $this->url(array("controller"=>"Dossierordinaire","action"=>"index")) ?>">Dossiers Ordinaires</a></li>
+  <li role="presentation" class="active"><a href="<?php echo $this->url(array("controller"=>"Instruction","action"=>"index")) ?>">Instructions</a></li>
+  <li role="presentation"><a href="<?php echo $this->url(array("controller"=>"Reaction","action"=>"index")) ?>">Réactions</a></li>
+  <li role="presentation" ><a href="<?php echo $this->url(array("controller"=>"Avis","action"=>"index")) ?>">Avis PM</a></li>
+</ul>
+
+<div class="row" style="margin-left : 20px; margin-top:10px">
+	<div class="col-xs-12"> 
+		<div class="row" >
+            <a href="<?php echo $this->url(array("controller"=>"Instruction","action"=>"ajouter")) ?>" class="btn btn-success" >Ajouter</a>
+		</div>
+		<div class="row" style="margin-top:10px">
+		<table id="example" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>Structure</th>
+                <th>Objet du dossier</th>
+                <th>Instruction</th>
+                <th>Date instruction</th>
+                <th>Echéance</th>
+                <th>Ref. instruction</th>
+                <th>Date corresp. instruction</th>
+                <th>Date corresp. dossier</th>
+                <th>Statut du dossier</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($this->listeInstruction as $instruction) : ?>
+                <tr>
+                    <td><?php if($instruction->sigleStructure) echo utf8_encode($instruction->sigleStructure) ; else echo utf8_encode($dossier->nomStructure); ?></td>
+                    <td><?php echo utf8_encode($instruction->objetDossierO); ?></td>
+                    <td><?php echo utf8_encode($instruction->instruction); ?></td>
+                    <td><?php echo $instruction->dateInstruction; ?></td>
+                    <td><?php echo $instruction->delaiReaction; ?></td>
+                    <td><?php echo utf8_encode($instruction->refInstruction); ?></td>
+                    <td><?php echo $instruction->dateCorespInstruction; ?></td>
+                    <td><?php echo $instruction->dateCorrespondance; ?></td>
+                    <td><?php echo utf8_encode($instruction->libStatut); ?></td>
+                    <td>
+                        <a href="<?php echo $this->url(array("controller"=>"Instruction","action"=>"modifier", "id"=>$instruction->idInstruction, "idstr"=>$instruction->idStructure )) ?>"><span class="glyphicon glyphicon-edit"> </span></a>
+                        <a href="<?php echo $this->url(array("controller"=>"Instruction","action"=>"supprimer", "id"=>$instruction->idInstruction )) ?>"><span class="glyphicon glyphicon-remove"> </span></a>
+                    </td>
+
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function() {
+    $('#example').DataTable( {
+        "language": {
+            "lengthMenu": "Affichage _MENU_   par page",
+            "zeroRecords": "Aucune donnée trouvée",
+            "info": "Page _PAGE_ sur _PAGES_",
+            "infoEmpty": "Aucune donnée à afficher",
+            "infoFiltered": "(filteré à partir de _MAX_ enregistrements)",
+            "search": "Recherche ",
+        }
+    } );
+} );
+</script>

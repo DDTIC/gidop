@@ -1,0 +1,61 @@
+<ul class="nav nav-tabs">
+  <li role="presentation" ><a href="<?php echo $this->url(array("controller"=>"Dossierordinaire","action"=>"index")) ?>">Dossiers Ordinaires</a></li>
+  <li role="presentation" ><a href="<?php echo $this->url(array("controller"=>"Instruction","action"=>"index")) ?>">Instructions</a></li>
+  <li role="presentation" ><a href="<?php echo $this->url(array("controller"=>"Reaction","action"=>"index")) ?>">Réactions</a></li>
+  <li role="presentation" class="active"><a href="<?php echo $this->url(array("controller"=>"Avis","action"=>"index")) ?>">Avis PM</a></li>
+</ul>
+
+<div class="row" style="margin-left : 20px; margin-top:10px">
+	<div class="col-xs-12"> 
+		<div class="row" >
+            <a href="<?php echo $this->url(array("controller"=>"Avis","action"=>"ajouter")) ?>" class="btn btn-success" >Ajouter</a>
+		</div>
+		<div class="row" style="margin-top:10px">
+		<table id="example" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>Structure</th>
+                <th>Objet du dossier</th>
+                <th>Avis PM</th>
+                <th>Date avis</th>
+                <th>Ref. corresp.</th>
+                <th>Date corresp.</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($this->listeAvis as $avis) : ?>
+                <tr>
+                    <td><?php if($avis->sigleStructure) echo ($avis->sigleStructure) ; else echo ($avis->nomStructure); ?></td>
+                    <td><?php echo ($avis->objetDossierO); ?></td>
+                    <td><?php echo ($avis->avisPM); ?></td>
+                    <td><?php echo $avis->dateAvisPM; ?></td>
+                    <td><?php echo $avis->refCorrespAvis; ?></td>
+                    <td><?php echo ($avis->dateCorrespAvis); ?></td>
+                    <td>
+                        <a href="<?php echo $this->url(array("controller"=>"Avis","action"=>"modifier", "id"=>$avis->idAvisPM, "idstr"=>$avis->idStructure, "iddossier"=>$avis->idDossierO )) ?>"><span class="glyphicon glyphicon-edit"> </span></a>
+                        <a href="<?php echo $this->url(array("controller"=>"Avis","action"=>"supprimer", "id"=>$avis->idAvisPM )) ?>"><span class="glyphicon glyphicon-remove"> </span></a>
+                    </td>
+
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function() {
+    $('#example').DataTable( {
+        "language": {
+            "lengthMenu": "Affichage _MENU_   par page",
+            "zeroRecords": "Aucune donnée trouvée",
+            "info": "Page _PAGE_ sur _PAGES_",
+            "infoEmpty": "Aucune donnée à afficher",
+            "infoFiltered": "(filteré à partir de _MAX_ enregistrements)",
+            "search": "Recherche ",
+        }
+    } );
+} );
+</script>

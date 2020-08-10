@@ -1,0 +1,7 @@
+<span style="font-weight: bold;">Instruction * </span>
+<select class="form-control" name="idins" required="" >
+	<option> </option>
+	<?php foreach($this->listeIns as $ins) : ?>
+			<option value="<?php echo $ins->idInstruction ?>"> <?php echo $ins->instruction ?> </option>
+		<?php endforeach; ?>						
+</select>

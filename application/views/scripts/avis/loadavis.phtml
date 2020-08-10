@@ -1,0 +1,8 @@
+<span style="font-weight: bold;">Avis PM *</span>
+<?php $i=0; foreach($this->listeAvisDo as $av) : ?>
+<textarea class="form-control" name="avis" required=""  > <?php echo $av->avisPM ?> </textarea>
+<?php $i++; endforeach; ?>
+<?php if($i == 0) : ?>
+<textarea class="form-control" name="avis" required=""  > <?php echo $av->avisPM ?> </textarea>
+<?php endif; ?>
+

@@ -1,0 +1,86 @@
+<?php if($this->etat == 1) { ?>
+	<div class="alert alert-success alert-dismissible" role="alert">
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  		<strong>Opération effectuée avec succès ! </strong>
+	</div>
+<?php } elseif($this->etat == -1) { ?>
+	<div class="alert alert-danger alert-dismissible" role="alert">
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  		<strong>Opération echouée ! </strong>
+	</div>
+<?php } ?>
+
+<div class="row" style="margin-left : 20px; margin-top:10px">
+	<div class="col-xs-12"> 
+		<div class="row" >
+            <a href="<?php echo $this->url(array("controller"=>"Dossiercc","action"=>"index")) ?>" class="btn btn-primary" >Liste dossiers</a>
+		</div>
+    </div>
+
+<form style="margin-top:20px;margin-left:5px" action="<?php echo $this->url(array("controller"=>"Dossiercc","action"=>"ajouter")) ?>" method="Post" enctype="multipart/form-data">
+<div class="row" style="margin-bottom:0px">
+	<div class="col-xs-12" style="margin-top:10px">
+		<h3 style="margin: 0px; padding-top: 0px;font-weight: bold;text-transform: uppercase;">Ajout Dossiers de conseil de cabinet</h3>
+		<div class="row" style="border:1px solid #D1DCF5;margin:2px 0 0 0;padding:10px;">
+			<div class="row" style="margin-top:2px">
+            	<div class="col-xs-4" >
+                	<span style="font-weight: bold;">Type * </span>
+					<select class="form-control" name="idType" required="">
+						<option> </option>
+							<?php foreach($this->listetdc as $tdc) : ?>
+								<option value="<?php echo $tdc->idType ?> "> <?php echo utf8_encode($tdc->libType);?> </option>
+							<?php endforeach; ?>
+					</select>
+				</div>
+				<div class="col-xs-4" >
+                    <span style="font-weight: bold;">Référence lettre de convocation *</span>
+                    <input class="form-control" name="refLettreConvocation" type="text" required=""  />
+				</div>
+				<div class="col-xs-4" >
+                    <span style="font-weight: bold;">Référence du rapport * </span>
+                     <input class="form-control" name="refRapport" type="text" required=""/>
+                </div>
+        	</div>
+			<div class="row" style="margin-top:2px">
+				<div class="col-xs-12" >
+                    <span style="font-weight: bold;">Objet *</span>
+                    <input class="form-control" name="objetDossierCC" type="text" required="" />
+                </div>
+			</div>
+			<div class="row" style="margin-top:2px">
+
+				<div class="col-xs-4" >
+                    <span style="font-weight: bold;">Date du conseil de cabinet *</span>
+                    <input class="form-control" name="dateCC" type="date" required=""/>
+                </div>
+				<div class="col-xs-4" >
+                    <span style="font-weight: bold;">Echéance de mise en oeuvre *</span>
+                    <input class="form-control" name="echeanceMiseOeuvre" type="text" required="" />
+				</div>
+				<div class="col-xs-4" >
+                    <span style="font-weight: bold;">Orientation * </span>
+                     <input class="form-control" name="orientationCC" type="text" required="" />
+                </div>
+			</div>
+			<div class="row" style="margin-top:2px">
+				<div class="col-xs-6" >
+                    <span style="font-weight: bold;">Synthèse *</span>
+                    <textarea class="form-control" name="syntheseDossierCC" required="" rows="5"></textarea>
+                </div>
+                <div class="col-xs-6" >
+                    <span style="font-weight: bold;">Observation </span>
+					<textarea class="form-control" name="observationCC" rows="5"></textarea>
+                </div>
+			</div>
+		</div>
+	</div>
+    </div>
+<div class=" row" style="margin-top:20px">
+	<div class="col-xs-12" style="background-color: #54B944;height:45px;text-align:center">
+		<input type="submit" value="Enregistrer" class="btn btn-primary" style="border: 1px solid #FFFFFF; background-color: #54B944; border-radius: 0px;margin-top:5px;color:white" />
+		<input type="reset" name="annuler" value="Annuler" class="btn btn-primary" style="border: 1px solid #FFFFFF; background-color:#54B944; border-radius: 0px;margin-top:5px;color:white" />
+	</div>
+</div>
+</form>
+</div>
+

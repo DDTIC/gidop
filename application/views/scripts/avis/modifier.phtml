@@ -1,0 +1,115 @@
+<?php if($this->etat == 1) { ?>
+	<div class="alert alert-success alert-dismissible" role="alert">
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  		<strong>Opération effectuée avec succès ! </strong>
+	</div>
+<?php } elseif($this->etat == -1) { ?>
+	<div class="alert alert-danger alert-dismissible" role="alert">
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  		<strong>Opération echouée ! </strong>
+	</div>
+<?php } ?>
+<ul class="nav nav-tabs">
+  <li role="presentation" ><a href="<?php echo $this->url(array("controller"=>"Dossierordinaire","action"=>"index")) ?>">Dossiers Ordinaires</a></li>
+  <li role="presentation" ><a href="<?php echo $this->url(array("controller"=>"Instruction","action"=>"index")) ?>">Instructions</a></li>
+  <li role="presentation"><a href="<?php echo $this->url(array("controller"=>"Reaction","action"=>"index")) ?>">Réactions</a></li>
+  <li role="presentation" class="active"><a href="<?php echo $this->url(array("controller"=>"Avis","action"=>"index")) ?>">Avis PM</a></li>
+</ul>
+
+<div class="row" style="margin-left : 20px; margin-top:10px">
+	<div class="col-xs-12"> 
+		<div class="row" >
+            <a href="<?php echo $this->url(array("controller"=>"Avis","action"=>"index")) ?>" class="btn btn-primary" >Liste avis PM</a>
+		</div>
+	</div>
+  <?php foreach($this->avis as $avis) : ?>
+<form style="margin-top:20px;margin-left:5px" action="<?php echo $this->url(array("controller"=>"Avis","action"=>"modifier")) ?>" method="Post" enctype="multipart/form-data">
+<div class="row" style="margin-bottom:0px">
+	<div class="col-xs-12" style="margin-top:10px">
+		<h5 style="margin: 0px; padding-top: 0px;font-weight: normal;text-transform: uppercase;">Mise à jour des avis</h5>
+		<div class="row" style="border:1px solid #D1DCF5;margin:2px 0 0 0;padding:10px;">
+			<div class="row" style="margin-top:2px">
+            	<div class="col-xs-4" >
+                	<span style="font-weight: bold;">Structure * </span>
+					<select class="form-control" name="idstr" id="str" required="" >
+						<option value="<?php echo $avis->idStructure ?>"><?php if($avis->sigleStructure) echo ($avis->sigleStructure); else echo ($avis->nomStructure); ?> </option>
+              <?php foreach($this->listeStr as $str) :
+                      if($str->idStructure != $avis->idStructure) :
+              ?>
+								<option value="<?php echo $str->idStructure ?> "> <?php if($str->sigleStructure) echo ($str->sigleStructure); else echo ($str->nomStructure); ?> </option>
+              <?php endif; endforeach; ?>
+					</select>
+				</div>
+				<div class="col-xs-8" id="loaddossier">
+                	<span style="font-weight: bold;">Dossier * </span>
+					<select class="form-control" name="iddossier" id="iddossier" required="" >
+						<option value="<?php echo $avis->idDossierO ?>"><?php echo $avis->objetDossierO ?></option>
+            <?php foreach($this->dossier as $do) : 
+									if($do->idDossierO != $avis->idDossierO) :
+							?>
+										<option value="<?php echo $do->idDossierO ?> "> <?php  echo ($do->objetDossierO); ?> </option>
+							<?php endif; endforeach; ?>
+							
+					</select>
+				</div>
+        	</div>
+			<div class="row" style="margin-top:2px">
+				      <div class="col-xs-8" id="loadavis">
+                    <span style="font-weight: bold;">Avis PM *</span>
+                    <textarea class="form-control" name="avis" required=""  > <?php echo $avis->avisPM ?> </textarea>
+                </div>
+                <div class="col-xs-4" >
+                    <span style="font-weight: bold;">Date Avis *</span>
+                    <input type="date" class="form-control" value="<?php echo $avis->dateAvisPM ?>" name="dateavis" required=""  />
+                </div>
+			</div>
+			<div class="row" style="margin-top:2px">
+				          <div class="col-xs-6" >
+                    <span style="font-weight: bold;">ref. corresp. *</span>
+                    <input type="text" class="form-control" value="<?php echo $avis->refCorrespAvis ?>" name="refcoresp" required="" />
+                  </div>
+                <div class="col-xs-6" >
+                    <span style="font-weight: bold;">Date corresp. *</span>
+					          <input type="date" class="form-control" value="<?php echo $avis->dateCorrespAvis ?>" name="datecoresp" required="" />
+                    <input type="hidden" name="id" value="<?php echo $this->id ?>" />
+                </div>
+			</div>
+		</div>
+	</div>
+    </div>
+<div class=" row" style="margin-top:20px">
+	<div class="col-xs-12" style="background-color: #54B944;height:45px;text-align:center">
+		<input type="submit" value="Modifier" class="btn btn-primary" style="border: 1px solid #FFFFFF; background-color: #54B944; border-radius: 0px;margin-top:5px;color:white" />
+		<input type="reset" name="annuler" value="Annuler" class="btn btn-primary" style="border: 1px solid #FFFFFF; background-color:#54B944; border-radius: 0px;margin-top:5px;color:white" />
+	</div>
+</div>
+</form>
+<?php endforeach; ?>
+</div>
+
+<script>
+	$('#str').on('change', function(){
+		event.preventDefault();   
+		  var $idstr = $(this).val();  
+
+  		if(history.pushState) {
+    		history.pushState(null, null, '/gidop/public/' );
+			$('#loaddossier').load('avis/loaddossier',{idstr : $idstr})
+  		}
+ 
+  		return false;
+
+	})
+  $('#iddossier').on('change', function(){
+		event.preventDefault();   
+		  var $iddossier = $(this).val(); 
+  
+  		if(history.pushState) {
+    		history.pushState(null, null, '/gidop/public/' );
+			$('#loadavis').load('avis/loadavis',{iddossier : $iddossier})
+  		}
+ 
+  		return false;
+
+	})
+</script>
